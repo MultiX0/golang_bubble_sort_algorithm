@@ -1,6 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+	"time"
+)
 
 func BubbleSort(sli []int) {
 	for i := range sli {
@@ -13,7 +19,30 @@ func BubbleSort(sli []int) {
 }
 
 func main() {
-	sli := []int{32, 3, 6, 132, 9, 0, -1, 43, 57, 5, 3, 2}
+	now := time.Now()
+	defer func() {
+		fmt.Println("result in :", time.Since(now))
+	}()
+	sli := []int{}
+	var length, input int
+
+	fmt.Println("What is the length of the array that you want ?")
+	fmt.Print(" > ")
+	fmt.Scan(&input)
+	length = input
+
+	for i := 0; i < length; i++ {
+		fmt.Println("value", i+1)
+		fmt.Print(" > ")
+		scanner := bufio.NewScanner(os.Stdin)
+		if scanner.Scan() {
+			num := scanner.Text()
+			parsedNum, _ := strconv.Atoi(num)
+			sli = append(sli, parsedNum)
+		}
+	}
+
+	fmt.Println("Sorted List :")
 	BubbleSort(sli)
 	fmt.Println(sli)
 }
